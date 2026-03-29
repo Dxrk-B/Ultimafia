@@ -827,6 +827,15 @@ const roleData = {
         ["Learn Evil Pairs", PRIORITY_INVESTIGATIVE_AFTER_RESOLVE_DEFAULT - 10],
       ],
     },
+    Arbiter: {
+      alignment: "Village",
+      category: "Investigative",
+      tags: ["Information", "Voting", "Basic"],
+      description: [
+        "At the start of each night, learn how many players in the most recent vote appeared evil.",
+      ],
+      nightOrder: [["Arbiter", PRIORITY_INVESTIGATIVE_DEFAULT]],
+    },
     Bloodhound: {
       alignment: "Village",
       category: "Investigative",
