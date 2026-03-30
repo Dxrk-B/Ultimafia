@@ -2892,6 +2892,19 @@ const roleData = {
         },
       ],
     },
+    Liquidator: {
+      alignment: "Mafia",
+      category: "Support",
+      tags: ["Items", "Information", "Advanced"],
+      description: [
+        "Gain 1 Gold whenever a Village-aligned player is killed or condemned.",
+        "Each day, a shop opens with 3 randomly selected items and abilities to purchase.",
+        "Items purchased are delivered at the start of the following night.",
+        "You may gift purchased items to any player.",
+        "Once per game, you may reroll the shop for free.",
+      ],
+      nightOrder: [],
+    },
     Pimp: {
       alignment: "Mafia",
       category: "Manipulative",
