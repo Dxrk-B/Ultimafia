@@ -4945,6 +4945,19 @@ const roleData = {
         "If Village wins, you win instead.",
       ],
     },
+    Banker: {
+      alignment: "Independent",
+      tags: ["Information", "Items", "Advanced"],
+      description: [
+        "You start with 2 Gold. Gain 1 Gold for each day and night you survive.",
+        "Each day, a shop opens with 3 randomly selected items plus the Golden Ticket.",
+        "Each night, you may invest any amount of Gold. Results are revealed the following day.",
+        "If you purchase the Golden Ticket (10 Gold), you win and leave the village.",
+        "All other players also have access to a rotating item shop each day.",
+        "Win by purchasing the Golden Ticket or being one of the last two players alive.",
+      ],
+      nightOrder: [["Invest Gold", PRIORITY_INVESTIGATIVE_DEFAULT]],
+    },
     Palladist: {
       alignment: "Independent",
       tags: [
