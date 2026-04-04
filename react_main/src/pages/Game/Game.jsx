@@ -585,6 +585,7 @@ export default function Game() {
         type: "add",
         player,
       });
+      playAudio("join");
     });
 
     socket.on("playerLeave", (playerId) => {
@@ -592,6 +593,7 @@ export default function Game() {
         type: "remove",
         playerId,
       });
+      playAudio("leave");
     });
 
     socket.on("spectatorCount", (count) => {
@@ -631,6 +633,13 @@ export default function Game() {
     });
 
     socket.on("roleReveal", (info) => {
+      // const appearance = info.role || "";
+      // const roleName = appearance.split(":")[0];
+      // const modPart = appearance.split(":")[1];
+      // const roleData = {
+      //   roleName,
+      //   modifiers: modPart ? modPart.split("/") : [],
+      // };
       // Only show modal if this is for the current player and game type supports it
       if (
         info.playerId === selfRef.current &&
@@ -812,6 +821,13 @@ export default function Game() {
         ...prev,
         readyPlayers: { ...prev.readyPlayers, [data.playerId]: true },
       }));
+      playAudio("readyCheck");
+    });
+
+    socket.on("audio", (audioName) => {
+      if (typeof audioName === "string" && audioName.length > 0) {
+        playAudio(audioName);
+      }
     });
   }, [connected]);
 
