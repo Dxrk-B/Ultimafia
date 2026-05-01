@@ -20,6 +20,7 @@ const HOST_OPTIONS_VERSIONS = {
   Ratscrew: 2,
   "Connect Four": 2,
   "Spot It": 1,
+  "Dice Wars": 2,
 };
 
 // Associate all of the existing saved options per game type into a map
@@ -169,7 +170,8 @@ var defaultOptions = {
     existingHostOptions["DiceWars"] || {
       ...commonHostOptions,
       mapSize: 30,
-      maxDice: 8,
+      maxDice: 20,
+      discardReserveDice: true,
       playLength: 30,
     },
   "Connect Four": existingHostOptions["Connect Four"] || {

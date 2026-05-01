@@ -1337,10 +1337,12 @@ const settingsChecks = {
   "Dice Wars": (settings, setup) => {
     const mapSize = settings.mapSize;
     const maxDice = settings.maxDice;
+    const discardReserveDice = settings.discardReserveDice !== false;
 
     return {
       mapSize,
       maxDice,
+      discardReserveDice,
     };
   },
   "Connect Four": (settings, setup) => {
