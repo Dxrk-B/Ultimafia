@@ -26,14 +26,14 @@ module.exports = class WinAtMidnight extends Card {
           let delta;
           switch (player.getRoleAlignment()) {
             case "Village":
-              delta = 1;
+              delta = -1;
               break;
             case "Mafia":
             case "Cult":
-              delta = 2;
+              delta = -2;
               break;
             default:
-              delta = -3;
+              delta = 3;
           }
           this.data.clock = (((this.data.clock + delta) % 12) + 12) % 12;
           let alert = `The clock strikes ${

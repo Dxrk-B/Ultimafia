@@ -56,7 +56,11 @@ module.exports = class RevealInfo extends Information {
     );
     OtherRoles = Random.randomizeArray(OtherRoles);
     if (this.truthValue == "Normal") {
-      this.revealTarget(null, this.investType);
+      this.target.setTempAppearance(
+        this.investType,
+        this.target.getRoleAppearance(this.investType)
+      );
+      this.revealTarget();
     } else if (this.truthValue == "True") {
       this.target.setTempAppearance(
         this.investType,
