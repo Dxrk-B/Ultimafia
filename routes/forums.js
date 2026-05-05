@@ -10,6 +10,40 @@ const logger = require("../modules/logging")(".");
 const errors = require("../lib/errors");
 const router = express.Router();
 
+async function notifyMentionedUsers(content, userId, userName, link) {
+  const mentionMatches = content.match(/@[\w-]+/g) || [];
+  const mentionNames = Array.from(
+    new Set(mentionMatches.map((mention) => mention.replace("@", "")))
+  );
+
+  if (mentionNames.length === 0) return;
+
+  const mentionedUserIds = new Set();
+
+  for (const mentionName of mentionNames) {
+    const escapedMentionName = mentionName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const mentionRegex = new RegExp(`^${escapedMentionName}$`, "i");
+    const mentionedUser = await models.User.findOne({ name: mentionRegex }).select(
+      "id"
+    );
+
+    if (mentionedUser && mentionedUser.id !== userId) {
+      mentionedUserIds.add(mentionedUser.id);
+    }
+  }
+
+  if (mentionedUserIds.size === 0) return;
+
+  routeUtils.createNotification(
+    {
+      content: `${userName} mentioned you in a forum post.`,
+      icon: "at",
+      link,
+    },
+    Array.from(mentionedUserIds)
+  );
+}
+
 router.get("/categories", async function (req, res) {
   res.setHeader("Content-Type", "application/json");
   res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -520,6 +554,14 @@ router.post("/thread", async function (req, res) {
       }
     ).exec();
 
+    const userName = await redis.getUserName(userId);
+    await notifyMentionedUsers(
+      content,
+      userId,
+      userName,
+      `/community/forums/thread/${thread.id}`
+    );
+
     try {
       const alertSettings = JSON.parse(process.env.FORUM_DISCORD_WEBHOOOKS);
       const useWebook = alertSettings.find((curWebook) => {
@@ -948,25 +990,12 @@ router.post("/reply", async function (req, res) {
       }
     ).exec();
 
-    var pingedNames = content.match(/@[\w-]+/g);
-
-    if (pingedNames) {
-      var pingedName = new RegExp(`^${pingedNames[0].replace("@", "")}$`, "i");
-      var pingedUser = await models.User.findOne({ name: pingedName }).select(
-        "id"
-      );
-
-      if (pingedUser && pingedUser.id != userId) {
-        routeUtils.createNotification(
-          {
-            content: `${userName} mentioned you in a reply.`,
-            icon: "at",
-            link: `/community/forums/thread/${threadId}?reply=${reply.id}`,
-          },
-          [pingedUser.id]
-        );
-      }
-    }
+    await notifyMentionedUsers(
+      content,
+      userId,
+      userName,
+      `/community/forums/thread/${threadId}?reply=${reply.id}`
+    );
 
     // Notify thread author if they have notifications enabled
     if (thread.replyNotify && thread.author.id != userId) {
