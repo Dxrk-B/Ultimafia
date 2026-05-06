@@ -4,6 +4,7 @@ const roleData = require("..//data/roles");
 const modifierData = require("../data/modifiers");
 const tagData = require("../data/roletags");
 const gameSettingData = require("../data/gamesettings");
+const { learnGameDescriptionByType } = require("../data/descriptions");
 const { isRoleDisabled } = require("../modules/roleAvailability");
 const logger = require("../modules/logging")(".");
 const router = express.Router();
@@ -97,6 +98,16 @@ router.get("/roletags", async function (req, res) {
   } catch (e) {
     logger.error(e);
     res.send([]);
+  }
+});
+
+router.get("/descriptions", async function (req, res) {
+  res.setHeader("Content-Type", "application/json");
+  try {
+    res.send(learnGameDescriptionByType);
+  } catch (e) {
+    logger.error(e);
+    res.send({});
   }
 });
 

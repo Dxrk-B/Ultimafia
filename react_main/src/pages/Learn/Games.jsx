@@ -25,7 +25,6 @@ import { ActiveGameTypes, DisabledGameTypes } from "Constants";
 import GameIcon from "components/GameIcon";
 import { SiteInfoContext } from "Contexts";
 import { hyphenDelimit } from "utils";
-import { learnGameDescriptionByType } from "../../../../data/descriptions";
 
 const TAB_IDS = ["roles", "modifiers", "items", "mechanics", "achievements"];
 const TAB_LABELS = {
@@ -302,6 +301,7 @@ function LearnTabsLayout({
 
 function LearnGamePanel({ gameType, Layout }) {
   const siteInfo = useContext(SiteInfoContext);
+  const learnGameDescriptionByType = siteInfo.learnGameDescriptionByType || {};
 
   const items = useMemo(() => {
     if (gameType !== "Mafia") return [];
@@ -392,6 +392,8 @@ function LearnGamePanel({ gameType, Layout }) {
 
 export default function Games(props) {
   const defaultGameType = "Mafia";
+  const siteInfo = useContext(SiteInfoContext);
+  const learnGameDescriptionByType = siteInfo.learnGameDescriptionByType || {};
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const requestedGameType =

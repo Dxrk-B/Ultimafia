@@ -35,6 +35,7 @@ if (process.env.NODE_ENV.includes("development")) {
     fileReport: 5 * 60 * 100,
     fileAppeal: 5 * 60 * 100,
     staffApplication: 24 * 60 * 60 * 100,
+    feedbackSubmission: 24 * 60 * 60 * 100,
     poke: 5 * 100,
     tradeStamp: 2 * 100,
   };
@@ -55,6 +56,7 @@ if (process.env.NODE_ENV.includes("development")) {
     fileReport: 5 * 60 * 1000,
     fileAppeal: 5 * 60 * 1000,
     staffApplication: 24 * 60 * 60 * 1000,
+    feedbackSubmission: 24 * 60 * 60 * 1000,
     poke: 5 * 1000,
     tradeStamp: 2 * 1000,
   };
@@ -387,7 +389,7 @@ module.exports = {
   initialGoldHeartCapacity: 0,
 
   // X days of open play -> Y days of review -> (14 - X - Y) days of nothing
-  openDaysPerCompetitiveRound: 9,
+  openDaysPerCompetitiveRound: 8,
   reviewDaysPerCompetitiveRound: 4,
 
   // Refresh every 23 hours

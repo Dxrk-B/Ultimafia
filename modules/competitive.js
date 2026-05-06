@@ -113,10 +113,13 @@ async function progressCompetitive() {
           } day ${currentRound.currentDay + 1}`
         );
 
-        // Only give out gold hearts on the first eight days of a round
-        if (constants.openDaysPerCompetitiveRound - currentRound.remainingOpenDays < 8) {
-          console.log(`[progressCompetitive]: Giving everyone 5 gold hearts`);
-          await models.User.updateMany({}, { $inc: { goldHearts: 5 } }).exec();
+        // Only give out gold hearts on the open days of a round
+        if (
+          constants.openDaysPerCompetitiveRound - currentRound.remainingOpenDays <
+          constants.openDaysPerCompetitiveRound
+        ) {
+          console.log(`[progressCompetitive]: Giving everyone 4 gold hearts`);
+          await models.User.updateMany({}, { $inc: { goldHearts: 4 } }).exec();
           await redis.invalidateAllCachedUsers();
         }
 

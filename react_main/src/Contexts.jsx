@@ -437,6 +437,13 @@ export function SiteInfoProvider({ children, setSiteInfoLoading }) {
           value: res.data,
         })
       ),
+      axios.get("/api/roles/descriptions").then((res) =>
+        updateSiteInfo({
+          type: "setProp",
+          prop: "learnGameDescriptionByType",
+          value: res.data,
+        })
+      ),
       axios
         .get("/api/items")
         .then((res) =>
@@ -454,7 +461,8 @@ export function SiteInfoProvider({ children, setSiteInfoLoading }) {
     siteInfoVal.modifiers &&
     siteInfoVal.gamesettings &&
     siteInfoVal.items &&
-    siteInfoVal.tags;
+    siteInfoVal.tags &&
+    siteInfoVal.learnGameDescriptionByType;
 
   return (
     <SiteInfoContext.Provider value={siteInfoVal}>

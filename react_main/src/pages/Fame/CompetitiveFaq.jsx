@@ -48,7 +48,7 @@ export function CompetitiveFaqContent() {
         <Typography variant="h3">When and how do I get gold hearts?</Typography>
       </Stack>
       <Typography paragraph>
-        All players receive 5 gold hearts per day for the first
+        All players receive 4 gold hearts per day for the first
         <Typography
           sx={{ display: "inline", fontWeight: "bold", fontStyle: "italic" }}
         >
@@ -57,7 +57,7 @@ export function CompetitiveFaqContent() {
         days of a round. Each day progresses to the next when UTC/GMT midnight
         passes. These gold hearts are consumed upon the completion of a
         competitive game (they are not spent if a player leaves the game). All
-        players will eventually receive a total of 40 gold hearts per round.
+        players will eventually receive a total of 32 gold hearts per round.
         Your gold hearts roll over between days in a round, but are reset to 0
         at the start of a new round.
       </Typography>
@@ -66,7 +66,7 @@ export function CompetitiveFaqContent() {
       </Typography>
       <Typography paragraph>
         A competitive season is divided into multiple rounds. Each round
-        consists of nine open days and four review days, which are followed by
+        consists of eight open days and four review days, which are followed by
         a one day break before the next round begins. During open days, players
         can play competitive games and earn fortune points. During review days,
         players cannot play competitive games, and admins may review games.
