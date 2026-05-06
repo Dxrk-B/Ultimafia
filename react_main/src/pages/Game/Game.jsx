@@ -3510,7 +3510,7 @@ export function ActionList({
 
 function Inventory({ items, actionsByItemId, gameType, metadataByName }) {
   const columns = 5;
-  const minimumRows = 5;
+  const minimumRows = 2;
   const safeItems = Array.isArray(items) ? items : [];
   const itemCount = safeItems.length;
   const rowsNeeded = itemCount > 0 ? Math.ceil(itemCount / columns) : 0;
@@ -3545,6 +3545,16 @@ export function InventoryPanel({
   accordion = true,
 }) {
   const siteInfo = useContext(SiteInfoContext);
+  const itemCount = Array.isArray(items) ? items.length : 0;
+  const [expanded, setExpanded] = useState(itemCount > 0);
+  const prevItemCount = useRef(itemCount);
+
+  useEffect(() => {
+    if (prevItemCount.current === 0 && itemCount > 0) {
+      setExpanded(true);
+    }
+    prevItemCount.current = itemCount;
+  }, [itemCount]);
 
   const metadataByName = useMemo(() => {
     const map = {};
@@ -3573,8 +3583,6 @@ export function InventoryPanel({
 
   if (!show) return null;
 
-  const itemCount = Array.isArray(items) ? items.length : 0;
-
   const title = (
     <InventoryCountBadge count={itemCount}>Inventory</InventoryCountBadge>
   );
@@ -3583,6 +3591,8 @@ export function InventoryPanel({
     <SideMenu
       title={title}
       isAccordionMenu={accordion}
+      expanded={expanded}
+      onChange={() => setExpanded((e) => !e)}
       content={
         <div className="inventory-section">
           <Inventory
